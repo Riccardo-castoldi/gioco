@@ -2,8 +2,8 @@ var mygamepiece;
 
 
 function startGame() {
+     myGameArea.start();
     mygamepiece = new component(30, 30, "green", 10, 120);
-    myGameArea.start();
 }
 
 function component(width, height, color, x, y) {
@@ -23,12 +23,12 @@ function component(width, height, color, x, y) {
 }
 
 var myGameArea = {
-    canvas : document.createElement("canvas"),
+    canvas : document.getElementById("gameCanvas"),
     start : function() {
         this.canvas.width = 480;
         this.canvas.height = 270;
         this.context = this.canvas.getContext("2d");
-        document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+       
         this.interval = setInterval(updateGameArea, 20);
     },
     clear : function() {
@@ -39,3 +39,25 @@ function updateGameArea() {
     myGameArea.clear(); 
     mygamepiece.update();
 }
+window.addEventListener('keydown', function(event) {
+    if (event.key == "ArrowRight") {
+        mygamepiece.x += 10;
+    }
+});
+window.addEventListener('keydown', function(event) {
+    if (event.key == "ArrowLeft") {
+        mygamepiece.x -= 10;
+    }
+});
+window.addEventListener('keydown', function(event) {
+    if (event.key == "ArrowUp") {
+        mygamepiece.y -= 10;
+    }
+});
+window.addEventListener('keydown', function(event) {
+    if (event.key == "ArrowDown") {
+        mygamepiece.y += 10;
+    }
+});
+
+startGame();
