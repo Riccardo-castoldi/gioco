@@ -1,11 +1,10 @@
-
-
-
 function startGame() {
      myGameArea.start();
     animatedobject.loadimage(); 
 }
-   
+var obstacle = {
+    
+
 
 var animatedobject = {
     speedx:0,
@@ -106,6 +105,18 @@ window.addEventListener('keydown', function(event) {
 window.addEventListener('keydown', function(event) {
     if (event.key == "ArrowDown") {
         animatedobject.speedy = 5;
+    }
+});
+
+window.addEventListener('keyup', function(event) {
+    if (event.key == "ArrowUp") {
+        animatedobject.speedy = 0;
+    } else if (event.key == "ArrowDown") {
+        animatedobject.speedy = 0;
+    } else if (event.key == "ArrowRight") {
+        animatedobject.speedx = 0;
+    } else if (event.key == "ArrowLeft") {
+        animatedobject.speedx = 0;
     }
 });
 
