@@ -1,18 +1,28 @@
-function startGame() {
+ var myObstacles = [];  
+ function startGame() {
      myGameArea.start();
     animatedobject.loadimage(); 
+    for (let i = 0; i < 5; i++) {
+    // 1. Definisci un'altezza minima e massima
+    let minAltezza = 50;
+    let maxAltezza = 250;
+
+    // 2. Calcola l'altezza casuale per QUESTO specifico ostacolo
+    let altezzaCasuale = Math.floor(Math.random() * (maxAltezza - minAltezza + 1) + minAltezza);
+
+    // 3. Usa altezzaCasuale quando crei il 'new component'
+    myObstacles.push(new component(20, altezzaCasuale, "green", 400 + (i * 200), 300));
 }
-var obstacle = {
-    
+}
 
-
+ 
 var animatedobject = {
     speedx:0,
     speedy:0,
     width: 60,
     height: 60,
-    x: 10,
-    y: 120,
+    x: 100,
+    y: 200,
     imagelist: [],
     contaframe:0,
     actualframe:0,
@@ -24,6 +34,7 @@ var animatedobject = {
     this.contaframe++;
     if (this.contaframe == 50) {
       this.contaframe = 0;
+      console.log("Immagini caricate:", this.imagelist.length);
       this.actualframe = (1 + this.actualframe) % this.imagelist.length;
       //console.log(this.actualframe);
       this.image = this.imagelist[this.actualframe];
