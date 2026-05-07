@@ -1,4 +1,5 @@
  var myObstacles = [];  
+ let attesaostacolo = 20;
  function startGame() {
      myGameArea.start();
     animatedobject.loadimage(); 
@@ -95,8 +96,31 @@ function updateGameArea() {
     myGameArea.clear(); 
     animatedobject.update();
     myGameArea.drawGameObject(animatedobject);
-    myGameArea.drawGameObject(animatedobject);
 
+    attesaostacolo--;
+
+    if (attesaostacolo <=0) {
+    let minH = 50;
+    let maxH = 250;
+    let hCasuale = Math.floor(Math.random() * (maxH - minH + 1) + minH);
+
+    let YCasuale = Math.floor(Math.random() * (600 - hCasuale));
+
+    myObstacles.push(new component(20, hCasuale, "green", 1000, YCasuale));
+    attesaostacolo = Math.floor(Math.random() * (100 - 50 + 1) + 50);
+}
+
+   
+
+    for (let i = myObstacles.length - 1; i >= 0; i--) {
+        myObstacles[i].x -= 2; 
+        
+        myObstacles[i].update();
+
+        if (myObstacles[i].x < -myObstacles[i].width) {
+            myObstacles.splice(i, 1);
+        }
+    }
 }
 window.addEventListener('keydown', function(event) {
     if (event.key == "ArrowRight") {
