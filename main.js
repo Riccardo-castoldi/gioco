@@ -14,6 +14,10 @@ function startGame() {
 
 function updateGameArea() {
     myGameArea.clear();
+    // Disegna la death zone
+let ctx = myGameArea.context;
+ctx.fillStyle = "red"; // Quale colore?
+ctx.fillRect(0, 0, 40, 600); // x, y, larghezza, altezza
     animatedobject.update();
     myGameArea.drawGameObject(animatedobject);
 
@@ -45,10 +49,32 @@ function updateGameArea() {
     }
 
     // Death Zone
-    if (animatedobject.x < 0) {
-        alert("GAME OVER!");
-        location.reload();
-    }
+if (animatedobject.x < 0) {
+    clearInterval(myGameArea.interval); 
+    
+    let ctx = myGameArea.context;
+     // 1. Sfondo semi-trasparente nero su tutto il canvas
+    ctx.fillStyle = "rgba(0, 0, 0, 0.7)"; // Nero con trasparenza
+    ctx.fillRect(0, 0, 1000, 600);
+    
+    // 4. Testo "GAME OVER" con bordo
+    ctx.font = "bold 80px Arial";
+    ctx.textAlign = "center";
+    
+    // Bordo bianco del testo
+    ctx.strokeStyle = "black";
+    ctx.lineWidth = 8;
+    ctx.strokeText("GAME OVER", 500, 280);
+    
+    // Riempimento rosso del testo
+    ctx.fillStyle = "red";
+    ctx.fillText("GAME OVER", 500, 280);
+    
+    // 5. Messaggio "Premi F5"
+    ctx.font = "30px Arial";
+    ctx.fillStyle = "white";
+    ctx.fillText("Premi CTRL+R per ricomimnciare", 500, 450); 
+ }
 }
 
 // Listener tastiera
