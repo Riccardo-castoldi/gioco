@@ -14,12 +14,21 @@ function startGame() {
 
 function updateGameArea() {
     myGameArea.clear();
-    // Disegna la death zone
 let ctx = myGameArea.context;
-ctx.fillStyle = "red"; // Quale colore?
-ctx.fillRect(0, 0, 40, 600); // x, y, larghezza, altezza
+ctx.fillStyle = "red"; 
+ctx.fillRect(0, 0, 40, 600); 
+    let oldX = animatedobject.x;
+    let oldY = animatedobject.y;
     animatedobject.update();
     myGameArea.drawGameObject(animatedobject);
+     for (let i = 0; i < myObstacles.length; i++) {
+        if (myObstacles[i].crashWith(animatedobject)) {
+             animatedobject.x = oldX;  
+            animatedobject.y = oldY;
+            break; 
+        }
+    }
+    
 
     attesaostacolo--;
 
@@ -37,10 +46,7 @@ ctx.fillRect(0, 0, 40, 600); // x, y, larghezza, altezza
         myObstacles[i].x -= 2;
         myObstacles[i].update();
 
-        // Controllo se l'ostacolo tocca il personaggio (Trascinamento)
-        if (myObstacles[i].crashWith(animatedobject)) {
-            animatedobject.x -= 2; 
-        }
+       
 
         // Pulizia: rimuovi ostacoli usciti a sinistra
         if (myObstacles[i].x < -myObstacles[i].width) {
