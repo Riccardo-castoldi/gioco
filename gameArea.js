@@ -6,8 +6,7 @@ var myGameArea = {
         this.canvas.width = 1000;
         this.canvas.height = 600;
         this.context = this.canvas.getContext("2d");
-
-        this.interval = setInterval(updateGameArea, 15);
+        this.interval = setInterval(updateGameArea, 10);
     },
     clear: function () {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);

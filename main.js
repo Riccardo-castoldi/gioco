@@ -1,13 +1,13 @@
 var myObstacles = [];
 let attesaostacolo = 20;
-
+let score = 0;
 function startGame() {
     myGameArea.start(updateGameArea);
     animatedobject.loadimage(sprites); // Assicurati che sprites sia definito
     
     // Generazione iniziale (opzionale, puoi anche partire da zero)
     for (let i = 0; i < 5; i++) {
-        let hCasuale = Math.floor(Math.random() * (250 - 50 + 1) + 50);
+        let hCasuale = Math.floor(Math.random() * (250 - 100 + 1) + 100);
         myObstacles.push(new component(20, hCasuale, "green", 400 + (i * 200), 300));
     }
 }
@@ -22,9 +22,15 @@ ctx.fillRect(0, 0, 40, 600);
     animatedobject.update();
     myGameArea.drawGameObject(animatedobject);
      for (let i = 0; i < myObstacles.length; i++) {
-        if (myObstacles[i].crashWith(animatedobject)) {
-             animatedobject.x = oldX;  
-            animatedobject.y = oldY;
+        if (myObstacles[i].crashWith(animatedobject) && myObstacles[i].topcrashwith(animatedobject)) {
+             animatedobject.x = oldX-2;  
+            break; 
+        }
+    }
+
+    for (let i = 0; i < myObstacles.length; i++) {
+        if (myObstacles[i].crashWith(animatedobject) && myObstacles[i].topcrashwith(animatedobject)) {
+             animatedobject.y = oldY;  
             break; 
         }
     }
@@ -51,7 +57,11 @@ ctx.fillRect(0, 0, 40, 600);
         // Pulizia: rimuovi ostacoli usciti a sinistra
         if (myObstacles[i].x < -myObstacles[i].width) {
             myObstacles.splice(i, 1);
-        }
+            score = score + myObstacles[i].height;
+        } 
+        ctx.font = "20px Arial";
+        ctx.fillStyle = "black";
+        ctx.fillText("Score: " + score, 800, 30);
     }
 
     // Death Zone
@@ -85,10 +95,11 @@ if (animatedobject.x < 0) {
 
 // Listener tastiera
 window.addEventListener('keydown', function (event) {
-    if (event.key == "ArrowRight") animatedobject.speedx = 5;
-    if (event.key == "ArrowLeft")  animatedobject.speedx = -5;
-    if (event.key == "ArrowUp")    animatedobject.speedy = -5;
-    if (event.key == "ArrowDown")  animatedobject.speedy = 5;
+
+    if (event.key == "ArrowRight" && animatedobject.x < 980) animatedobject.speedx = 3;
+    if (event.key == "ArrowLeft")  animatedobject.speedx = -3;
+    if (event.key == "ArrowUp" && animatedobject.y > 0)    animatedobject.speedy = -3;
+    if (event.key == "ArrowDown" && animatedobject.y < 580)  animatedobject.speedy = 3;
 });
 
 window.addEventListener('keyup', function (event) {

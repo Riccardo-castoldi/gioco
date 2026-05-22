@@ -8,16 +8,16 @@ var animatedobject = {
     imagelist: [],
     contaframe: 0,
     actualframe: 0,
-    image: null, // Inizialmente nullo
+    image: null,
 
     update: function () {
         this.x += this.speedx;
         this.y += this.speedy;
         
-        // Se abbiamo immagini, gestiamo l'animazione
+        // gestione immagini
         if (this.imagelist.length > 0) {
             this.contaframe++;
-            if (this.contaframe >= 10) { // 10 è più veloce e reattivo di 50
+            if (this.contaframe >= 10) { 
                 this.contaframe = 0;
                 this.actualframe = (this.actualframe + 1) % this.imagelist.length;
                 this.image = this.imagelist[this.actualframe];
@@ -31,7 +31,6 @@ var animatedobject = {
             img.src = imgPath;
             this.imagelist.push(img);
         }
-        // Fondamentale: assegna la prima immagine subito!
         this.image = this.imagelist[0];
     }
 };
