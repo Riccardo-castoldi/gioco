@@ -1,6 +1,8 @@
 var myObstacles = [];
 let attesaostacolo = 20;
 let score = 0;
+let gameSpeed = 2;
+let speedIncrement = 0;
 function startGame() {
     myGameArea.start(updateGameArea);
     animatedobject.loadimage(sprites); // Assicurati che sprites sia definito
@@ -17,13 +19,29 @@ function updateGameArea() {
 let ctx = myGameArea.context;
 ctx.fillStyle = "red"; 
 ctx.fillRect(0, 0, 40, 600); 
+ speedIncrement++;
+    if (speedIncrement % 300 === 0) {  // Ogni 300 frame
+        gameSpeed += 0.3;  // Aumenta velocità di 0.3
+        console.log("Velocità aumentata a: " + gameSpeed);
+    }
     let oldX = animatedobject.x;
     let oldY = animatedobject.y;
+
+    if (animatedobject.x + animatedobject.width > 1000) {
+    animatedobject.x = 1000 - animatedobject.width;
+    }
+    if (animatedobject.y < 0) {
+        animatedobject.y = 0;
+    }
+    if (animatedobject.y + animatedobject.height > 600) {
+        animatedobject.y = 600 - animatedobject.height;
+    }
+
     animatedobject.update();
     myGameArea.drawGameObject(animatedobject);
      for (let i = 0; i < myObstacles.length; i++) {
         if (myObstacles[i].crashWith(animatedobject) && myObstacles[i].topcrashwith(animatedobject)) {
-             animatedobject.x = oldX-2;  
+             animatedobject.x = oldX-gameSpeed;  
             break; 
         }
     }
@@ -49,7 +67,7 @@ ctx.fillRect(0, 0, 40, 600);
 
     // Movimento e Collisioni
     for (let i = myObstacles.length - 1; i >= 0; i--) {
-        myObstacles[i].x -= 2;
+        myObstacles[i].x -= gameSpeed;
         myObstacles[i].update();
 
        
